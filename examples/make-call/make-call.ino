@@ -7,16 +7,11 @@
  ***********************************************************************************/
  
  #include <SIM800L.h>
-#include <DHT.h>
 
 SIM800L sim800l(2, 3); //Rx, Tx
 
-//Enter the phone number of the person whom you want to send sms
+//Enter the phone number of the person whom you want to make a call
 String PHONE = "+923001234567";
-
-#define DHTPIN 4     	// DHT11 data pin
-#define DHTTYPE DHT11   // DHT11 sensor type
-DHT dht(DHTPIN, DHTTYPE);
 
 void handleSMS(String number, String message) {
   Serial.println("number: " + number + "\nMessage: " + message);
@@ -31,31 +26,12 @@ void setup() {
   
   sim800l.begin(9600);
   
-  dht.begin();
-  
   sim800l.setSMSCallback(handleSMS);
   sim800l.setCallCallback(handleCall);
+  
+  sim800l.makeCall(PHONE);
 }
 
 void loop() {
   sim800l.listen();
-  
-  float humidity = dht.readHumidity();
-  float temperature = dht.readTemperature();
-  
-  if (isnan(humidity) || isnan(temperature)) {
-    Serial.println("Failed to read data from DHT11 sensor");
-    return;
-  }
-  
-  Serial.print("Temperature: ");
-  Serial.print(temperature);
-  Serial.print(" °C, Humidity: ");
-  Serial.print(humidity);
-  Serial.println(" %");
-  
-  String Message = "Temperature: " +temperature+ " °C, Humidity: " +humidity+ " %";
-  sim800l.sendSMS(PHONE, Message);
-  
-  delay(10000);
 }

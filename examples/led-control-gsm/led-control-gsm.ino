@@ -10,16 +10,28 @@
 
 SIM800L sim800l(2, 3); //Rx, Tx
 
+#define LED_PIN 13
+
 void handleSMS(String number, String message) {
   Serial.println("number: " + number + "\nMessage: " + message);
+  if(message == "on") {
+    digitalWrite(LED_PIN, HIGH);
+  } 
+  else if(message == "off") {
+    digitalWrite(LED_PIN, LOW);
+  }
 }
 
 void handleCall(String number) {
   Serial.println("New call from " + number);
+  boolean flag = digitalRead(LED_PIN);
+  digitalWrite(LED_PIN, !flag);
 }
 
 void setup() {
   Serial.begin(9600);
+  
+  pinMode(LED_PIN, OUTPUT);
   
   sim800l.begin(9600);
   
@@ -29,8 +41,4 @@ void setup() {
 
 void loop() {
   sim800l.listen();
-  
-  while(Serial.available())  {
-    sim800l.tryATcommand(Serial.readString());
-  }
 }

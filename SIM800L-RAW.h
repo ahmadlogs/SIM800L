@@ -1,12 +1,4 @@
-/*************************************************************************************
- *  Created By: Tauseef Ahmad
- *  Created On: 15 April, 2023
- *  
- *  Tutorial: https://youtu.be/lYN8hqNAKbU
- *  My Channel: https://www.youtube.com/channel/UCOXYfOHgu-C-UfGyDcu5sYw/
- ***********************************************************************************/
- 
- #include <SoftwareSerial.h>
+#include <SoftwareSerial.h>
 
 class SIM800L {
   //------------------------------------------------------------------------------------
