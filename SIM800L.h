@@ -37,7 +37,7 @@ class SIM800L {
       //---------------------------------------------------------------------------------
       // Initialize the software serial interface
       simSerial.begin(baudrate);
-  
+      pinMode(resetPin, OUTPUT);
       // Reset the module, if a reset pin was provided
       reset();
       //---------------------------------------------------------------------------------
